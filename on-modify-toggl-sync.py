@@ -26,11 +26,7 @@ def toggl_start(project, desc):
         out_fail()
     api.TimeEntry.start_and_save(project=project, description=desc)
 
-def toggl_stop():
-    cur_te = toggl_current_entry()
-    if cur_te == None:
-        print("There is no time entry running!")
-        out_fail()
+def toggl_stop(cur_te):
     cur_te.stop_and_save()
 
 def do_start(project_name, desc):
@@ -44,7 +40,7 @@ def do_stop(project, desc):
     cur_te = toggl_current_entry()
     if cur_te == None or cur_te.description != desc or cur_te.project.name != project:
         return
-    toggl_stop()
+    toggl_stop(cur_te)
 
 def do_modify(project_name, desc, mod_project_name, mod_desc):
     cur_te = toggl_current_entry()
